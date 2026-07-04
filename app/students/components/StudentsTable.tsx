@@ -2,36 +2,33 @@
 
 import { Trash2 } from "lucide-react";
 
-interface Book {
+interface Student {
   id: number;
-  title: string;
-  author: string;
-  category: string;
-  isbn: string;
-  quantity: number;
-  available: number;
+  fullName: string;
+  admissionNo: string;
+  className: string;
 }
 
 interface Props {
-  books: Book[];
+  students: Student[];
   onDelete: (id: number) => void;
 }
 
-export default function BooksTable({
-  books,
+export default function StudentsTable({
+  students,
   onDelete,
 }: Props) {
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg">
 
-      <div className="border-b bg-gradient-to-r from-blue-700 to-indigo-700 px-6 py-5">
+      <div className="bg-gradient-to-r from-green-600 to-emerald-600 px-6 py-5">
 
         <h2 className="text-2xl font-bold text-white">
-          Library Books
+          Registered Students
         </h2>
 
-        <p className="mt-1 text-blue-100">
-          View and manage all books available in SmartLibrary.
+        <p className="mt-1 text-green-100">
+          View and manage all students in SmartLibrary.
         </p>
 
       </div>
@@ -45,23 +42,15 @@ export default function BooksTable({
             <tr>
 
               <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">
-                Title
+                Full Name
               </th>
 
               <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">
-                Author
+                Admission No.
               </th>
 
               <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">
-                Category
-              </th>
-
-              <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">
-                ISBN
-              </th>
-
-              <th className="px-6 py-4 text-center text-sm font-bold text-gray-700">
-                Available
+                Class
               </th>
 
               <th className="px-6 py-4 text-center text-sm font-bold text-gray-700">
@@ -74,57 +63,47 @@ export default function BooksTable({
 
           <tbody>
 
-            {books.length === 0 ? (
+            {students.length === 0 ? (
 
               <tr>
 
                 <td
-                  colSpan={6}
+                  colSpan={4}
                   className="py-12 text-center text-lg text-gray-500"
                 >
-                  📚 No books available yet.
+                  👨‍🎓 No students registered yet.
                 </td>
 
               </tr>
 
             ) : (
 
-              books.map((book) => (
+              students.map((student) => (
 
                 <tr
-                  key={book.id}
-                  className="border-b hover:bg-blue-50 transition"
+                  key={student.id}
+                  className="border-b hover:bg-green-50 transition"
                 >
 
                   <td className="px-6 py-4 font-semibold text-gray-900">
-                    {book.title}
+                    {student.fullName}
                   </td>
 
                   <td className="px-6 py-4 text-gray-700">
-                    {book.author}
+                    {student.admissionNo}
                   </td>
 
                   <td className="px-6 py-4">
-                    <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700">
-                      {book.category}
-                    </span>
-                  </td>
-
-                  <td className="px-6 py-4 text-gray-700">
-                    {book.isbn}
-                  </td>
-
-                  <td className="px-6 py-4 text-center">
-                    <span className="rounded-full bg-green-100 px-3 py-1 font-semibold text-green-700">
-                      {book.available}/{book.quantity}
+                    <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-green-700">
+                      {student.className}
                     </span>
                   </td>
 
                   <td className="px-6 py-4 text-center">
 
                     <button
-                      onClick={() => onDelete(book.id)}
-                      className="inline-flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 font-medium text-white transition hover:bg-red-700"
+                      onClick={() => onDelete(student.id)}
+                      className="inline-flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-white font-medium hover:bg-red-700 transition"
                     >
                       <Trash2 size={16} />
                       Delete
