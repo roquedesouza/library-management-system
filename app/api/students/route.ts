@@ -11,9 +11,14 @@ export async function GET() {
     });
 
     return NextResponse.json(students);
-  } catch (error) {
+  } catch (error: any) {
+    console.error(error);
+
     return NextResponse.json(
-      { error: "Failed to fetch students." },
+      {
+        error: error.message,
+        stack: process.env.NODE_ENV === "development" ? error.stack : undefined,
+      },
       { status: 500 }
     );
   }
@@ -34,9 +39,11 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(student);
   } catch (error: any) {
+    console.error(error);
+
     return NextResponse.json(
       {
-        error: error.message || "Failed to create student.",
+        error: error.message,
       },
       { status: 500 }
     );
@@ -56,13 +63,13 @@ export async function DELETE(req: NextRequest) {
       },
     });
 
-    return NextResponse.json({
-      success: true,
-    });
+    return NextResponse.json({ success: true });
   } catch (error: any) {
+    console.error(error);
+
     return NextResponse.json(
       {
-        error: error.message || "Failed to delete student.",
+        error: error.message,
       },
       { status: 500 }
     );
