@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./library.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Admin {
@@ -23,11 +23,11 @@ model Student {
 }
 
 model Book {
-  id          Int      @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
   title       String
   author      String
   category    String
-  isbn        String   @unique
+  isbn        String @unique
   publisher   String?
   publishedAt Int?
   quantity    Int
@@ -35,7 +35,6 @@ model Book {
 
   borrowings Borrowing[]
 }
-
 
 model Borrowing {
   id         Int       @id @default(autoincrement())
@@ -50,5 +49,5 @@ model Borrowing {
   status String
 
   student Student @relation(fields: [studentId], references: [id])
-  book Book @relation(fields: [bookId], references: [id])
+  book    Book    @relation(fields: [bookId], references: [id])
 }
